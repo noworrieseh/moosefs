@@ -29,32 +29,10 @@ jobs:
           ./macosx_build.sh
           ./macosx/makepkg.sh
 
-      - name: Upload build
-        uses: actions/upload-artifact@v4
-        with:
-          name: release
-          path: ./moosefs-3.0.118-1.pkg
-          overwrite: true
-
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: release
-          path: ./release-assets
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
+      - name: 'Create Release'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          name: 3.0.118
-          files: ./release-assets/*.pkg
-          draft: false
-          prerelease: false
+        run: |
+          hub release create v${{ env.MOOSEFS_VERSION }} -m "Build" -a moosefs-3.0.118-1.pkg
+
 
