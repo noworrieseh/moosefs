@@ -17,6 +17,7 @@ jobs:
       - name: Build
         run: |
           cd repo
-          git checkout v3.0.118
+          git fetch --tags
+          git checkout tags/v3.0.118
           ./macosx_build.sh
 
