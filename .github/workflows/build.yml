@@ -20,21 +20,28 @@ jobs:
         with:
           submodules: true
 
+      - name: Download macFUSE
+        uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          repo: macfuse/macfuse
+          version: tags/macfuse-${{ env.MACFUSE_VERSION }}
+          file: macfuse-${{ env.MACFUSE_VERSION }}.dmg
+          target: macfuse.dmg
+
       - name: Build
         run: |
-          curl -L -o macfuse.dmg https://github.com/macfuse/macfuse/releases/download/macfuse-${{ env.MACFUSE_VERSION }}/macfuse-${{ env.MACFUSE_VERSION }}.dmg
+          #curl -L -o macfuse.dmg https://github.com/macfuse/macfuse/releases/download/macfuse-${{ env.MACFUSE_VERSION }}/macfuse-${{ env.MACFUSE_VERSION }}.dmg
           hdiutil attach macfuse.dmg
           sudo installer -pkg /Volumes/macFUSE/Install\ macFUSE.pkg -target /
           cd repo
           git fetch --tags
           git checkout tags/v${{ env.MOOSEFS_VERSION }}
-          ./macosx_build.sh
           ./macosx/makepkg.sh
 
       - name: Release
         uses: ncipollo/release-action@v1
         with:
-          tag: 3.0.118
+          tag: ${{ env.MOOSEFS_VERSION }}
           commit: main
           artifacts: "*.pkg"
         #    moosefs-3.0.118-1.pkg
