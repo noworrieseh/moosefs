@@ -31,18 +31,14 @@ jobs:
           target: macfuse.dmg
 
       - name: Install macFUSE
-        run: |
-          hdiutil attach macfuse.dmg
-          sudo installer -pkg /Volumes/macFUSE/Install\ macFUSE.pkg -target /
+        use: noworrieseh/install-dmg-action@v1
+        with:
+          dmg: macfuse.dmg
+          installer: "Install macFUSE.pkg"
 
       - name: Build
         run: |
-          #curl -L -o macfuse.dmg https://github.com/macfuse/macfuse/releases/download/macfuse-${{ env.MACFUSE_VERSION }}/macfuse-${{ env.MACFUSE_VERSION }}.dmg
-          #hdiutil attach macfuse.dmg
-          #sudo installer -pkg /Volumes/macFUSE/Install\ macFUSE.pkg -target /
           cd repo
-          #git fetch --tags
-          #git checkout tags/v${{ env.MOOSEFS_VERSION }}
           ./macosx/makepkg.sh
 
       - name: Release
