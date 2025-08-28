@@ -8,6 +8,10 @@ on:
 jobs:
   build:
     runs-on: macos-14
+    env:
+      MACFUSE_VERSION: 4.10.2
+      MOOSEFS_VERSION: 3.0.118
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -16,8 +20,11 @@ jobs:
 
       - name: Build
         run: |
+          curl -L -o macfuse.dmg https://github.com/macfuse/macfuse/releases/download/macfuse-${{ env.MACFUSE_VERSION }}/macfuse-${{ env.MACFUSE_VERSION }}.dmg
+          hdiutil attach macfuse.dmg
+          sudo installer -pkg /Volumes/macFUSE/macFUSE.pkg -target /
           cd repo
           git fetch --tags
-          git checkout tags/v3.0.118
+          git checkout tags/v${{ env.MOOSEFS_VERSION }}
           ./macosx_build.sh
 
