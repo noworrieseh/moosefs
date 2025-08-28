@@ -27,5 +27,6 @@ jobs:
           git fetch --tags
           git checkout tags/v${{ env.MOOSEFS_VERSION }}
           ./macosx_build.sh
+          ./macosx/makepkg.sh
           ls -l * ../*
 
