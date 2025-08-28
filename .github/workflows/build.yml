@@ -30,11 +30,12 @@ jobs:
           ./macosx/makepkg.sh
 
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: ncipollo/release-action@v1
         with:
-          files: |
-            moosefs-3.0.118-1.pkg
-          tag_name: 3.0.118
+          tag: 3.0.118
+          commit: main
+          artifacts: "*.pkg"
+        #    moosefs-3.0.118-1.pkg
 
 
 
