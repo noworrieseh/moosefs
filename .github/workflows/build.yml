@@ -15,10 +15,12 @@ jobs:
       contents: write
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Checkout MooseFS
+        uses: actions/checkout@v5
         with:
-          submodules: true
+          repository: moosefs/moosefs
+          ref: v${{ env.MOOSEFS_VERSION }}
+          path: repo
 
       - name: Download macFUSE
         uses: dsaltares/fetch-gh-release-asset@master
@@ -28,14 +30,19 @@ jobs:
           file: macfuse-${{ env.MACFUSE_VERSION }}.dmg
           target: macfuse.dmg
 
+      - name: Install macFUSE
+        run: |
+          hdiutil attach macfuse.dmg
+          sudo installer -pkg /Volumes/macFUSE/Install\ macFUSE.pkg -target /
+
       - name: Build
         run: |
           #curl -L -o macfuse.dmg https://github.com/macfuse/macfuse/releases/download/macfuse-${{ env.MACFUSE_VERSION }}/macfuse-${{ env.MACFUSE_VERSION }}.dmg
-          hdiutil attach macfuse.dmg
-          sudo installer -pkg /Volumes/macFUSE/Install\ macFUSE.pkg -target /
+          #hdiutil attach macfuse.dmg
+          #sudo installer -pkg /Volumes/macFUSE/Install\ macFUSE.pkg -target /
           cd repo
-          git fetch --tags
-          git checkout tags/v${{ env.MOOSEFS_VERSION }}
+          #git fetch --tags
+          #git checkout tags/v${{ env.MOOSEFS_VERSION }}
           ./macosx/makepkg.sh
 
       - name: Release
