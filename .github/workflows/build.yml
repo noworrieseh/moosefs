@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: macos-14
     env:
-      MACFUSE_VERSION: 4.10.2
+      MACFUSE_VERSION: 4.8.2
       MOOSEFS_VERSION: 3.0.118
 
     steps:
