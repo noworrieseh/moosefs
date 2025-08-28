@@ -1,0 +1,22 @@
+name: macOS 14 Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Build
+        run: |
+          cd repo
+          git checkout v3.0.118
+          ./macosx_build.sh
+
