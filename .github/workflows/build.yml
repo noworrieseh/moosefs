@@ -11,6 +11,8 @@ jobs:
     env:
       MACFUSE_VERSION: 4.8.2
       MOOSEFS_VERSION: 3.0.118
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout code
