@@ -31,7 +31,7 @@ jobs:
           target: macfuse.dmg
 
       - name: Install macFUSE
-        use: noworrieseh/install-dmg-action@v1
+        uses: noworrieseh/install-dmg-action@v1
         with:
           dmg: macfuse.dmg
           installer: "Install macFUSE.pkg"
