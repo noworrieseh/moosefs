@@ -28,5 +28,12 @@ jobs:
           git checkout tags/v${{ env.MOOSEFS_VERSION }}
           ./macosx_build.sh
           ./macosx/makepkg.sh
-          ls -l * ../*
+
+      - name: Upload build
+        uses: actions/upload-artifact@v4
+        with:
+          name: release
+          path: ./moosefs-3.0.118-1.pkg
+          overwrite: true
+
 
