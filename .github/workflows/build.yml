@@ -29,10 +29,12 @@ jobs:
           ./macosx_build.sh
           ./macosx/makepkg.sh
 
-      - name: 'Create Release'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          hub release create v${{ env.MOOSEFS_VERSION }} -m "Build" -a moosefs-3.0.118-1.pkg
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            moosefs-3.0.118-1.pkg
+          tag_name: 3.0.118
+
 
 
