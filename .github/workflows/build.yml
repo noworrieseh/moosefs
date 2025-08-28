@@ -41,6 +41,7 @@ jobs:
       - name: Release
         uses: ncipollo/release-action@v1
         with:
+          allowUpdates: true
           tag: ${{ env.MOOSEFS_VERSION }}
           commit: main
           artifacts: "*.pkg"
